@@ -1,6 +1,6 @@
 {
   "name": "react-native-vpn-detect",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Checks for VPN & Proxy",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,11 @@
     "android",
     "vpn",
     "proxy",
-    "network"
+    "network",
+    "vpn-detection",
+    "proxy-detection",
+    "vpn detection",
+    "proxy detection"
   ],
   "author": {
     "name": "Samet Kızılaslan",
