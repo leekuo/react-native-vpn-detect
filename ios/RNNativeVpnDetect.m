@@ -29,20 +29,18 @@ RCT_EXPORT_METHOD(detectVPN:(RCTPromiseResolveBlock)resolve
 RCT_EXPORT_METHOD(detectProxy:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 {
-        //resolve(@"detectProxy");
-    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-
-    NSDictionary *proxyDict = @{
-                            @"HTTPEnable"  : [NSNumber numberWithInt:1],
-                            (NSString *)kCFStreamPropertyProxyLocalBypass  : @"10.26.*.*",
-                            @"HTTPSEnable" : [NSNumber numberWithInt:1],
-                           (NSString *)kCFStreamPropertyProxyLocalBypass  : @"10.26.*.*"
-                              };
-    sessionConfig.connectionProxyDictionary = proxyDict;
-    
-    CFDictionaryRef dicRef = CFNetworkCopySystemProxySettings();
-    const CFStringRef proxyCFstr = (const CFStringRef)CFDictionaryGetValue(dicRef, (const void*)kCFNetworkProxiesHTTPProxy);
-    resolve(proxyCFstr);
+    NSDictionary *proxySettings = CFBridgingRelease(CFNetworkCopySystemProxySettings());
+    NSArray *proxies = (__bridge NSArray *)(CFNetworkCopyProxiesForURL((__bridge CFURLRef _Nonnull)([NSURL URLWithString:@"http://www.google.com"]), (__bridge CFDictionaryRef _Nonnull)(proxySettings)));
+    NSDictionary *settings = proxies[0];
+    BOOL isConnected = NO;
+    if ([[settings objectForKey:(NSString *)kCFProxyTypeKey] isEqualToString:@"kCFProxyTypeNone"]){
+        isConnected = NO;
+    }
+    else{
+        isConnected = YES;
+    }
+    resolve(@(isConnected));
 }
+
 
 @end

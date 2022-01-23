@@ -1,6 +1,6 @@
 {
   "name": "react-native-vpn-detect",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Checks for VPN & Proxy",
   "main": "index.js",
   "scripts": {
