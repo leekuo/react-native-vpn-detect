@@ -33,7 +33,7 @@ public class RNNativeVpnDetectModule extends ReactContextBaseJavaModule {
     boolean isRunningVPN = false;
     for (Network value : networks) {
       NetworkCapabilities caps = cm.getNetworkCapabilities(value);
-      if (caps != null && caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN) || !caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)) {
+      if (caps != null && (caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN) || !caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN))) {
         isRunningVPN = true;
         break;
       }
